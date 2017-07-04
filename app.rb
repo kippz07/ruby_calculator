@@ -61,6 +61,7 @@ def get_numbers operation
 	if operation != 'r'
 		puts "Enter the second number:"
 		number_2 = gets.chomp.to_f
+
 		puts calculate operation, number_1, number_2
 	else 
 		puts calculate operation, number_1
@@ -77,27 +78,47 @@ def bmi_calculator system
 	if system == 'i'
 		puts "Enter height in inches:"
 		height = gets.chomp.to_f
+
 		puts "Enter weight in pounds:"
 		weight = gets.chomp.to_f
+
 		bmi = (weight * 703) / (height ** 2)
 	elsif system == 'm'
 		puts "Enter height in metres:"
 		height = gets.chomp.to_f
+
 		puts "Enter weight in kilograms:"
-		weight = gets.chomp.to_f
+		weight = gets.chomp.
+
 		bmi = weight/ (height ** 2)
 	end
 end
 
 def trip_calculator 
-	puts "Enter a distance:"
-	distance = gets.chomp
+	puts "Enter a distance (miles):"
+	distance = gets.chomp.to_f
+
 	puts "Enter a fuel efficiency (mpg):"
-	fuel_efficiency = gets.chomp
+	fuel_efficiency = gets.chomp.to_f
+
 	puts "Enter a cost per gallon:"
-	cost = gets.chomp
+	costpg = gets.chomp.to_f
+
 	puts "Enter a speed (mph):"
-	speed = gets.chomp
+	speed = gets.chomp.to_f
+
+	if speed > 60
+		over_60 = speed - 60
+		fuel_efficiency -= over_60 * 2
+		if fuel_efficiency < 1
+			fuel_efficiency = 1
+		end
+	end
+
+	time = distance / speed
+	cost = distance * costpg / fuel_efficiency
+	
+	result = "Your trip will take #{'%.02f' % time} hours and cost £#{'%.02f' % cost}."
 end
 
 puts "Do you want the (b)asic calculator, (a)dvanced calculator, bm(i) calculator or (t)rip calculator?"
@@ -106,17 +127,20 @@ which_calc = gets.chomp
 if which_calc == 'b'
 	puts "Do you want to do (a)ddition, (s)ubtraction, (m)ultiplication or (d)ivision?"
 	operation = gets.chomp
+
 	get_numbers operation
 elsif which_calc == 'a'
 	puts "Do you want to do (p)ower or square (r)oot?"
 	operation = gets.chomp
+
 	get_numbers operation
 elsif which_calc == 'i'
 	choice = bmi_menu
 	result = bmi_calculator choice
+
 	puts "#{'%.01f' % result}"
 elsif which_calc == 't'
-
+	puts trip_calculator
 end
 
 
